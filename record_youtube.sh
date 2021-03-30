@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
-link=$1
+usage() {
+  echo "Usage: $0 [-f|--from hh:mm:ss]  [-t|--to hh:mm:ss] [-b|--best] [-V|--verbose] <youtube_link>"
+}
+
+link=
 from=
 to=
 best=
@@ -33,8 +37,17 @@ while [[ $# -gt 0 ]]; do
 done
 set -- "${COMMAND_ARGS[@]}"
 
+if [ $# -gt 1 ]; then
+  shift
+  echo "Unknown parameters" $@
+  usage
+  exit 1
+fi
+
+link=$1
+
 if [ -z $link ]; then
-  echo "$0 [-f|--from hh:mm:ss]  [-t|--to hh:mm:ss] [-b|--best] [-V|--verbose] <youtube_link>"
+  usage
   exit 1
 fi
 
